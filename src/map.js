@@ -21,8 +21,6 @@ export function initMap(ymaps, containerId) {
 
   myMap.geoObjects.add(objectManager);
   
-  objectManager.clusters.options.set('preset', 'islands#greenClusterIcons');
-
   loadList().then(data => {
     objectManager.add(data);
   });
@@ -32,12 +30,14 @@ export function initMap(ymaps, containerId) {
     const objectId = event.get('objectId');
     const obj = objectManager.objects.getById(objectId);
 
-    objectManager.objects.balloon.open(objectId);
-
+    console.log(objectId)
+    console.log(obj)
+    
     if (!obj.properties.details) {
       loadDetails(objectId).then(data => {
         obj.properties.details = data;
         objectManager.objects.balloon.setData(obj);
+        objectManager.objects.balloon.open(objectId);
       });
     }
   });
